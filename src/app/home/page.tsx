@@ -1,42 +1,48 @@
-'use client';
-import { useState,useEffect } from "react";
+"use client";
+import { useState, useEffect, useRef, ChangeEvent } from "react";
 
+type FileName = string;
 
-export default function Menu(){
-const [style,setStyle] = useState<"bg-green-300" | "bg-red-300" | "bg-yellow-300">('bg-red-300');
-   
+export default function Menu() {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [pickedFiles, setPickedFiles] = useState<FileName[]>([]);
 
-
- return <>
-
-  <div onDrop={(event)=>{
-    event.preventDefault();
-    event.stopPropagation();
-    console.log("Drop event");
-    setStyle('bg-green-300');
-    console.log(event.dataTransfer.files[0]);
-  }} onDragOver={(event)=>{
-    event.preventDefault();
-    event.stopPropagation();
-    setStyle("bg-yellow-300")
-    console.log();
-  }} className={`w-full  h-10 ${style}`}>
-  
-  </div>
-  <div  className="w-full absolute top-20 right-10 left-10   h-10 bg-slate-900"draggable onDrag={(e)=>{
-    console.log("dragging...");
-    e.dataTransfer.setData("data","samuel");
-  }}>
-Drag object
-  </div>
-  </>
-}
-
-function Header(){
-    return   <div className="bg-blue-200 leading-6 flex flex-row items-center justify-around w-full h-10 text-slate-600 dark:text-slate-400 font-semibold underline p-1">
-    <li>Documents</li>
-    <li>Pdf Files</li>
-    <li>Images</li>
-    <li>Word Files</li>
-</div>
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      setPickedFiles([...pickedFiles, file.name]);
+    } else {
+      console.log("No image file chosen ");
+    }
+  };
+  return (
+    <section>
+      <input
+        onChange={handleFileChange}
+        ref={inputRef}
+        hidden={true}
+        type="file"
+        name="file"
+        id="file"
+      />
+      <button
+        onClick={() => {
+          inputRef.current?.click();
+        }}
+        className="w-40 bg-green-800 text-white m-2 p-1 rounded-sm "
+      >
+        Select File
+      </button>
+      <div>
+        {pickedFiles.map((file) => (
+          <h2
+            key={file}
+            className="bg-slate-200 text-2xl text-green-800 p-1 m-1"
+          >
+            {file}
+          </h2>
+        ))}
+      </div>
+    </section>
+  );
 }
