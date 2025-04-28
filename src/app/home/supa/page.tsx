@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabase/server';
 
 export default function Home() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<{title:any,isbn:any}[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -34,12 +34,9 @@ export default function Home() {
         </thead>
         <tbody>
         {data.map(item => (
-        <tr key={item.isbn}>
-          <td className='p-2 m-1  border border-gray-300'>{item.id} </td>
-          <td className='p-2 m-1  border border-gray-300'>{item.title}</td> 
-          <td className='p-2 m-1  border border-gray-300'>{item.isbn}</td>
-          <td className='p-2 m-1  border border-gray-300'>{item.author}</td>
-          <td className='p-2 m-1  border border-gray-300'>{item.genre}</td>         
+        <tr key={item.isbn}>     
+          <td className='p-2 m-1  border border-gray-300'>{item.title}</td>
+          <td className='p-2 m-1  border border-gray-300'>{item.isbn}</td>     
         </tr>
         ))}
       </tbody>
