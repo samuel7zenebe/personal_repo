@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react';
-import { supabase } from '@/app/utils/supabase/server';
+import { supabase } from '@/utils/supabase/server';
 
 export default function Home() {
   const [data, setData] = useState([]);
