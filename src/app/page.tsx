@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useEffect,useState } from "react";
 import FileExtension from "../components/extensionFile";
+import Header from "@/components/Header";
 export default function Home() {
 const [width,setWidth] = useState('w-5');
 const [fileSelected,setFileSelected] = useState<boolean>(false);
@@ -13,6 +14,7 @@ useEffect(()=>{
 })
   return (
     <div className="flex flex-col items-center justify-center m-10 ">
+    <Header />
    <h1 className="heading m-2 h-5 font-bold text-blue-400"> File Uploading Feature.. </h1>
  
         <input multiple onChange={async  (e)=>{
