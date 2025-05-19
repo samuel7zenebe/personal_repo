@@ -1,17 +1,9 @@
-import pool from "@/lib/db";
+import SignUp from "./client_components/sign-up";
 
 export async function Users() {
-  const users = await getUsers();
   return (
-    <div>
-      {users.map((u: any) => (
-        <h1 key={u.id}>{u.name}</h1>
-      ))}
-    </div>
+    <>
+      <SignUp />
+    </>
   );
-}
-
-export async function getUsers() {
-  const users = await pool.query("SELECT * FROM users");
-  return users.rows;
 }
