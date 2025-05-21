@@ -27,7 +27,7 @@ import { url } from "inspector";
 const items = [
   {
     title: "Home",
-    url: "/",
+    url: "/main",
     icon: Home,
   },
   {

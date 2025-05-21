@@ -1,11 +1,12 @@
 import {NextResponse} from "next/server";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-export async function GET(request:Request,response:Response) {
-    let message = "";
-    message = await delay();
+export async function GET(request: NextApiRequest, response: NextApiResponse) {
+  let message = "";
+  message = await delay();
   return NextResponse.json({
-    message
-  })
+    message,
+  });
 }
 
 function delay():Promise<string> {

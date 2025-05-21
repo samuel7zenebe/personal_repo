@@ -12,17 +12,16 @@ export default function SignUp() {
 
 
   return (
-    <section className="w-screen flex flex-col justify-center items-center gap-y-4">
-      <Session />
-      <h1 className="text-2xl text-purple-600 w-full text-center mb-10 mt-4 font-bold">
+    <section className="flex flex-col justify-center items-center gap-y-4 w-full">
+      <h1 className="text-2xl  w-full text-center mb-10 mt-4 font-bold">
         Sign In
       </h1>
-      <div className="w-1/2 flex flex-col justify-start items-start gap-y-1 text-gray-200">
+      <div className="w-1/2 flex flex-col justify-start items-start gap-y-1">
         <label className="w-full text-sm text-ellipsis" htmlFor="email">
           Email
         </label>
         <input
-          className="w-full p-1.5 bg-gray-950 border-[0.4px] border-gray-50 "
+          className="w-full p-1.5 border-[0.4px] border-gray-50 "
           value={email}
           onChange={(e) => {
             setEmail((prevState) => e.target.value);
@@ -32,12 +31,12 @@ export default function SignUp() {
           id="email"
         />
       </div>
-      <div className="w-1/2 flex flex-col justify-start items-start gap-y-1 text-gray-200">
+      <div className="w-1/2 flex flex-col justify-start items-start gap-y-1">
         <label className="w-full text-sm text-ellipsis" htmlFor="password">
           Password
         </label>
         <input
-          className="w-full p-1.5 bg-gray-950 border-[0.4px] focus:border-0 not-focus:outline-0 notfocus:border-gray-50 focus:outline-green-500"
+          className="w-full p-1.5 border-[0.4px] focus:border-0 not-focus:outline-0 focus:outline-green-500"
           type="password"
           value={password}
           onChange={(e) => {
@@ -48,7 +47,7 @@ export default function SignUp() {
         />
       </div>
       <button
-        className="w-1/2 p-2 bg-purple-600 hover:bg-purple-700"
+        className="w-1/2 p-2"
         onClick={async () => {
           const { data, error } = await supabase.auth.signInWithPassword({
             email: email,
