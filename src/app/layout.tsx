@@ -28,30 +28,25 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SidebarProvider className="flex justify-start items-start">
           <AppSidebar />
-
-          <main className="">
-            <section></section>
-            <section className="md:hidden dark:bg-neutral-950 overflow-hidden h-full  flex flex-col  flex-1/4 w-60 absolute top-0 right-0">
-              <div className="flex justify-between">
-                <span></span>
-                <Menu className="m-2">close</Menu>
-              </div>
-              <div>
-                <p className="p-2 font-bold text-leading">Link 1</p>
-                <p className="p-2 font-bold text-leading">Link 2</p>
-                <p className="p-2 font-bold text-leading">Link 3</p>
-                <p className="p-2 font-bold text-leading">Link 4</p>
-                <p className="p-2 font-bold text-leading">Link 5</p>
-              </div>
-            </section>
-            <SidebarTrigger />
-
-            {children}
-          </main>
+          <SidebarTrigger className="not-md:hidden" />
+          <section className="md:hidden bg-neutral-950 text-white overflow-hidden h-full  flex flex-col  flex-1/4 w-60 absolute top-0 right-0">
+            <div className="flex justify-between">
+              <span></span>
+              <Menu className="m-2">close</Menu>
+            </div>
+            <div>
+              <p className="p-2 font-bold text-leading">Link 1</p>
+              <p className="p-2 font-bold text-leading">Link 2</p>
+              <p className="p-2 font-bold text-leading">Link 3</p>
+              <p className="p-2 font-bold text-leading">Link 4</p>
+              <p className="p-2 font-bold text-leading">Link 5</p>
+            </div>
+          </section>
+          <main className="p-1">{children}</main>
         </SidebarProvider>
       </body>
     </html>

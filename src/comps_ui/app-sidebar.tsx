@@ -1,4 +1,12 @@
-import { Calendar,Plus,Home, Inbox, Search, Settings } from "lucide-react";
+import {
+  Calendar,
+  Plus,
+  Home,
+  Inbox,
+  Search,
+  Settings,
+  UsersIcon,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -10,42 +18,46 @@ import {
   SidebarMenuItem,
   SidebarGroupAction,
   SidebarFooter,
-  SidebarMenuSkeleton
+  SidebarMenuSkeleton,
 } from "@/components/ui/sidebar";
-
+import { url } from "inspector";
 
 // Menu items.
 
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/",
     icon: Home,
   },
   {
     title: "Inbox",
-    url: "/users",
+    url: "/inbox",
     icon: Inbox,
   },
   {
     title: "Calendar",
-    url: "#",
+    url: "/calendar",
     icon: Calendar,
   },
   {
     title: "Search",
-    url: "#",
+    url: "/search",
     icon: Search,
   },
   {
     title: "Settings",
-    url: "#",
+    url: "/settings",
     icon: Settings,
+  },
+  {
+    title: "Users",
+    url: "/users",
+    icon: UsersIcon,
   },
 ];
 
 export async function AppSidebar() {
-
   return (
     <Sidebar side="left" variant="inset">
       <SidebarContent>
@@ -60,7 +72,6 @@ export async function AppSidebar() {
             <SidebarMenu className="">
               {items.map((item) => (
                 <SidebarMenuItem className="m-1" key={item.title}>
-                
                   <SidebarMenuButton asChild>
                     <a
                       className="flex justify-start items-center  py-5"
@@ -79,5 +90,3 @@ export async function AppSidebar() {
     </Sidebar>
   );
 }
-
-
