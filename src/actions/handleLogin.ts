@@ -24,11 +24,11 @@ export async function handleFeedBackAction(
     };
   }
     const { data, error } = await supabase.from("feedback").insert({
-      email: "samoe@gmail.com",
-      createdAt: "2025-05-22 13:18:54+00",
+      email,
+      created_at: "2025-05-22 13:18:54+00",
       name: email.split("@")[0],
-      content: "this is just feedback",
-      id: 11,
+      content,
+      id: Math.floor(Math.random() * 100000),
     });
  
 

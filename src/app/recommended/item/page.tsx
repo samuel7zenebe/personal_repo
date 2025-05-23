@@ -1,9 +1,8 @@
-import Posts from "@/comps_ui/posts-data";
+import FeedBacks from "@/comps_ui/feedbacks";
 import { supabase } from "@/utils/supabase/server";
 import { FC, Suspense } from "react";
 
-
-export default async function ItemPage(){
+export default async function ItemPage() {
   const feedBacks = await feedBack();
 
   return (
@@ -30,12 +29,12 @@ export default async function ItemPage(){
           ))}
         </div>
         <Suspense fallback="Loading...">
-          <Posts></Posts>
+          <FeedBacks />
         </Suspense>
       </section>
     </>
   );
-};
+}
 
 async function feedBack() {
   const { data, error } = await supabase.from("feedback").select("*");
@@ -44,4 +43,3 @@ async function feedBack() {
   }
   if (data) return data;
 }
-
