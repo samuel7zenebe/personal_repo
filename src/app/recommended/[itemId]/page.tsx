@@ -38,7 +38,7 @@ const ItemPage: FC<PageProps> = async ({ params }) => {
   );
 };
 
-export async function feedBack() {
+async function feedBack() {
   const { data, error } = await supabase.from("feedback").select("*");
   if (error) {
     return null;
