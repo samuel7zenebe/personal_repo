@@ -29,18 +29,18 @@ function Page() {
 
   const disableButtonStyle = !isPending ? "hover:bg-blue-500" : "";
   return (
-    <div className="w-full flex flex-col justify-center items-center gap-2">
+    <div className="w-full flex flex-col justify-center items-center">
       <main className="bg-slate-800 text-neutral-100 p-4 font-bold text-xl text-center w-full">
         Proposed Knowledge Management System.
       </main>
       <form
         action={formAction}
-        className="lg:w-1/2 w-full  flex justify-center items-center flex-col  gap-4 mx-2"
+        className="lg:w-1/2 w-full  flex justify-center items-center flex-col  gap-4 px-4"
       >
         <h1 className="text-2xl font-light p-2">
           Do You have anything to share ?
         </h1>
-        <p className="text-slate-500">
+        <p className="text-slate-500 sm:p-4">
           help us notice something that we are not aware of and build better
           product.
         </p>
