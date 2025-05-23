@@ -1,8 +1,6 @@
 "use client";
-import { useState, useActionState, useEffect } from "react";
+import { useActionState, useEffect } from "react";
 import { handleFeedBackAction } from "@/actions/handleLogin";
-import { handleCount } from "@/actions/handleLogin";
-import { success } from "zod/v4";
 
 export type FeedbackType = {
   email: string | undefined;
@@ -24,14 +22,12 @@ function Page() {
     handleFeedBackAction,
     initialState
   );
-  const [error, setError] = useState<string | undefined>();
 
   useEffect(() => {
-    if (!state.success) {
-      setError(state.message);
-    }
+    console.log("State  Changed...");
   }, [state]);
 
+  const disableButtonStyle = !isPending ? "hover:bg-blue-500" : "";
   return (
     <div className="w-full flex flex-col justify-center items-center gap-2">
       <main className="bg-slate-800 text-neutral-100 p-4 font-bold text-xl text-center w-full">
@@ -39,7 +35,7 @@ function Page() {
       </main>
       <form
         action={formAction}
-        className="w-full flex justify-center items-center flex-col  gap-4"
+        className="lg:w-1/2 w-full  flex justify-center items-center flex-col  gap-4 mx-2"
       >
         <h1 className="text-2xl font-light p-2">
           Do You have anything to share ?
@@ -51,7 +47,7 @@ function Page() {
         <p className="block text-sm text-bold text-red-600">
           {state.success === false ? state.message : ""}
         </p>
-        <div className="flex flex-col w-1/2 justify-start  mt-2 items-start">
+        <div className="flex flex-col justify-start  mt-2 items-start w-full">
           <label className="text-sm/tight font-semibold" htmlFor="email">
             Your Email Address
           </label>
@@ -64,7 +60,7 @@ function Page() {
             id="email"
           />
         </div>
-        <div className="flex flex-col w-1/2 justify-start  mt-2 items-start">
+        <div className="flex flex-col justify-start  mt-2 items-start w-full">
           <label className="text-sm/tight font-semibold" htmlFor="content">
             Your Idea
           </label>
@@ -76,12 +72,13 @@ function Page() {
             id="content"
           ></textarea>
         </div>
-        <div className="flex flex-col w-1/2 justify-start  mt-2 items-start">
+        <div className="flex flex-col justify-start  mt-2 items-start w-full">
           <button
+            disabled={isPending}
             type="submit"
-            className="bg-blue-400 hover:bg-blue-500 cursor-pointer text-white w-full p-2 my-1 font-bold text-lg/loose"
+            className={`bg-blue-400 ${disableButtonStyle}  cursor-pointer text-white w-full p-2 my-1 font-bold text-lg/loose`}
           >
-            Submit
+            {isPending ? "Submitting" : "Submit"}
           </button>
         </div>
       </form>

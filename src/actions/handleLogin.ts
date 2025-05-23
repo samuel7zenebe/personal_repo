@@ -1,5 +1,7 @@
 'use server';
 import type { FeedbackType } from "@/app/page";
+import { supabase } from "@/utils/supabase/server";
+import crypto from "node:crypto";
 
 export async function handleLogin(formData: FormData) {
   console.log("Handling Login....");
@@ -12,7 +14,6 @@ export async function handleFeedBackAction(
 ) {
   const email = formData.get("email")?.toString();
   const content = formData.get("content")?.toString();
-  console.log(email);
 
   if (!email || !content) {
     return {
@@ -22,15 +23,33 @@ export async function handleFeedBackAction(
       success: false,
     };
   }
+  //   const { error } = await supabase.from("feedback").insert({
+  //     email: "samoe@gmail.com",
+  //     createdAt: "2025-05-22 13:18:54+00",
+  //     name: email.split("@")[0],
+  //     content: "this is just feedback",
+  //     id: 11,
+  //   });
+  const { data, error } = await supabase.from("books").select("*");
+  console.log(data);
+
+  if (error) {
+    console.log(error);
+    return {
+      email,
+      content,
+      message: "Something went wrong while storing in database.",
+      success: false,
+    };
+  }
+
+  // if it survives
+
   return {
     email,
     content,
-    message: "You have successfully sent feedback.",
+    message: "You have successfully submitted feedback.",
     success: true,
   };
 }
 
-export async function handleCount(prevState: number, formData: FormData) {
-  console.log(prevState);
-  return prevState + Number.parseInt(formData.get("number")?.toString() || "0");
-}
