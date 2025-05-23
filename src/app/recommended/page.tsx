@@ -1,6 +1,6 @@
 "use client";
 import { supabase } from "@/utils/supabase/server";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 
 type BookType = {
   id: number;
@@ -60,18 +60,20 @@ function Page() {
           Change ISBN for Book 1
         </button>
       </form>
-      <div>
-        <div className="flex flex-row">
-          <h1>Title</h1>
-          <h1>ISBN</h1>
-        </div>
-        {resource?.map((book, index) => (
-          <div key={index} className="w-full flex flex-row">
-            <h2>{book.title}</h2>
-            <h2>{book.isbn}</h2>
+      <Suspense fallback="Loading...">
+        <div>
+          <div className="flex flex-row">
+            <h1>Title</h1>
+            <h1>ISBN</h1>
           </div>
-        ))}
-      </div>
+          {resource?.map((book, index) => (
+            <div key={index} className="w-full flex flex-row">
+              <h2>{book.title}</h2>
+              <h2>{book.isbn}</h2>
+            </div>
+          ))}
+        </div>
+      </Suspense>
     </section>
   );
 }

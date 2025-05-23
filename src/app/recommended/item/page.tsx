@@ -1,14 +1,9 @@
+import Posts from "@/comps_ui/posts-data";
 import { supabase } from "@/utils/supabase/server";
-import { FC } from "react";
+import { FC, Suspense } from "react";
 
-interface PageProps {
-  params: {
-    itemId: Promise<string>;
-  };
-}
 
-const ItemPage: FC<PageProps> = async ({ params }) => {
-  const itemId = await params.itemId;
+export default async function ItemPage(){
   const feedBacks = await feedBack();
 
   return (
@@ -20,10 +15,11 @@ const ItemPage: FC<PageProps> = async ({ params }) => {
           <h1>Email</h1>
           <h1>Content</h1>
         </div>
+
         <div>
           {feedBacks?.map((user) => (
             <div
-              className="grid grid-cols-4 grid-rows-1 bg-slate-200"
+              className="grid grid-cols-4 grid-rows-1 bg-slate-200 p-2"
               key={user.id * Math.floor(Math.random() * 100)}
             >
               <h1>{user.id}</h1>
@@ -33,6 +29,9 @@ const ItemPage: FC<PageProps> = async ({ params }) => {
             </div>
           ))}
         </div>
+        <Suspense fallback="Loading...">
+          <Posts></Posts>
+        </Suspense>
       </section>
     </>
   );
@@ -46,4 +45,3 @@ async function feedBack() {
   if (data) return data;
 }
 
-export default ItemPage;

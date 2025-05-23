@@ -23,15 +23,14 @@ export async function handleFeedBackAction(
       success: false,
     };
   }
-  //   const { error } = await supabase.from("feedback").insert({
-  //     email: "samoe@gmail.com",
-  //     createdAt: "2025-05-22 13:18:54+00",
-  //     name: email.split("@")[0],
-  //     content: "this is just feedback",
-  //     id: 11,
-  //   });
-  const { data, error } = await supabase.from("books").select("*");
-  console.log(data);
+    const { data, error } = await supabase.from("feedback").insert({
+      email: "samoe@gmail.com",
+      createdAt: "2025-05-22 13:18:54+00",
+      name: email.split("@")[0],
+      content: "this is just feedback",
+      id: 11,
+    });
+ 
 
   if (error) {
     console.log(error);
