@@ -1,6 +1,14 @@
 import { supabase } from "@/utils/supabase/server";
+import { FC } from "react";
 
-export default async function Page() {
+interface PageProps {
+  params: {
+    itemId: Promise<string>;
+  };
+}
+
+const ItemPage: FC<PageProps> = async ({ params }) => {
+  const itemId = await params.itemId;
   const feedBacks = await feedBack();
 
   return (
@@ -14,7 +22,7 @@ export default async function Page() {
       <div>
         {feedBacks?.map((user) => (
           <div
-            className="grid grid-cols-4 grid-rows-1"
+            className="grid grid-cols-4 grid-rows-1 bg-slate-200"
             key={user.id * Math.floor(Math.random() * 100)}
           >
             <h1>{user.id}</h1>
@@ -26,7 +34,7 @@ export default async function Page() {
       </div>
     </section>
   );
-}
+};
 
 export async function feedBack() {
   const { data, error } = await supabase.from("feedback").select("*");
@@ -35,3 +43,5 @@ export async function feedBack() {
   }
   if (data) return data;
 }
+
+export default ItemPage;
