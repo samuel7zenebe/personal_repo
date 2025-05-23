@@ -1,11 +1,4 @@
 import { supabase } from "@/utils/supabase/server";
-export type UserType = {
-    id: number,
-    created_at: string | undefined,
-    name: string | undefined,
-    content:string | undefined,
-    email:string | undefined
-  }
 
 export default async function Page() {
   const feedBacks = await feedBack();
