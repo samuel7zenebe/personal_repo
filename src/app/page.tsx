@@ -31,7 +31,7 @@ function Page() {
   return (
     <div className="w-full flex flex-col justify-center items-center">
       <main className="bg-slate-800 text-neutral-100 p-4 font-bold text-xl text-center w-full">
-        Proposed Knowledge Management System.
+        Knowledge Management System.
       </main>
       <form
         action={formAction}
