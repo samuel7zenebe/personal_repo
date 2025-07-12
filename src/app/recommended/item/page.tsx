@@ -12,7 +12,7 @@ export default async function ItemPage() {
           <h1>ID</h1>
           <h1>Name</h1>
           <h1>Email</h1>
-          <h1>Content</h1>
+          <h1>Content of the user</h1>
         </div>
 
       <div>          <h1>Total Feedbacks {feedBacks?.length}</h1>
@@ -33,7 +33,7 @@ export default async function ItemPage() {
   );
 }
 
-async function feedBack() {
+export async function feedBack() {
   const { data, error } = await supabase.from("feedback").select("*");
   if (error) {
     return null;
