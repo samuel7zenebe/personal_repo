@@ -1,9 +1,9 @@
-import FeedBacks from "@/comps_ui/feedbacks";
+
 import { supabase } from "@/utils/supabase/server";
 import { FC, Suspense } from "react";
 
 export default async function ItemPage() {
-  const feedBacks = await feedBack();
+  const feedBacks = await supabase.from("feedback").select("*");
 
   return (
     <>
@@ -33,11 +33,3 @@ export default async function ItemPage() {
   );
 }
 
-
-async function feedBack() {
-  const { data, error } = await supabase.from("feedback").select("*");
-  if (error) {
-    return null;
-  }
-  if (data) return data;
-}
