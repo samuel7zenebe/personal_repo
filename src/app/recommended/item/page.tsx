@@ -33,7 +33,8 @@ export default async function ItemPage() {
   );
 }
 
-export async function feedBack() {
+
+async function feedBack() {
   const { data, error } = await supabase.from("feedback").select("*");
   if (error) {
     return null;
