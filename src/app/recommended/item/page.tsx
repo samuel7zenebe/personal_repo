@@ -3,7 +3,7 @@ import { supabase } from "@/utils/supabase/server";
 import { FC, Suspense } from "react";
 
 export default async function ItemPage() {
-  const feedBacks = await supabase.from("feedback").select("*");
+  const {data:feedBacks }= await supabase.from("feedback").select("*");
 
   return (
     <>
