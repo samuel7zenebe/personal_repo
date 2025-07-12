@@ -15,7 +15,7 @@ export default async function ItemPage() {
           <h1>Content</h1>
         </div>
 
-        <div>
+      <div>          <h1>Total Feedbacks {feedBacks.length}</h1>
           {feedBacks?.map((user) => (
             <div
               className="grid grid-cols-4 grid-rows-1 bg-slate-200 p-2"
@@ -28,9 +28,6 @@ export default async function ItemPage() {
             </div>
           ))}
         </div>
-        <Suspense fallback="Loading...">
-          <FeedBacks />
-        </Suspense>
       </section>
     </>
   );
