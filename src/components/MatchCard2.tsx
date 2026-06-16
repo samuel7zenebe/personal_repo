@@ -71,16 +71,13 @@ function TeamDisplay({
 
 export function MatchCard({ match, homeTeam, awayTeam }: MatchCardProps) {
   return (
-    <Card className="p-3">
+    <Card className="p-3 cursor-pointer rounded-2xl shadow-xl">
       <div className="flex items-center gap-3">
         <TeamDisplay team={homeTeam} fallback={match.home_team_name_en} />
-
         <div className="flex flex-col items-center">
-          {match.finished === "TRUE" && (
-            <span className="text-lg font-bold">
-              {match.home_score} - {match.away_score}
-            </span>
-          )}
+          <span className="text-lg font-bold">
+            {match.home_score} - {match.away_score}
+          </span>
 
           <Badge
             variant={match.finished !== "FALSE" ? "secondary" : "outline"}

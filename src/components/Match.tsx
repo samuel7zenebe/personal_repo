@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { WorldCupMatch } from "@/app/page";
 import { TeamType } from "./TeamList";
+import { object } from "zod/v4";
 
 interface MatchCardProps {
   match: WorldCupMatch;
@@ -36,7 +37,6 @@ export function MatchCard({ match, homeTeam, awayTeam }: MatchCardProps) {
                 className="rounded border"
               />
             )}
-
             <div className="text-right">
               <h3 className="font-semibold">{homeTeam?.name_en}</h3>
 
@@ -44,6 +44,12 @@ export function MatchCard({ match, homeTeam, awayTeam }: MatchCardProps) {
                 {homeTeam?.fifa_code}
               </p>
             </div>
+
+            {match.finished === "TRUE" && Number(match.home_score) > 0 && (
+              <div>
+                <ScorersCard rawData={match.home_scorers} />
+              </div>
+            )}
           </div>
 
           {/* Score */}
@@ -78,6 +84,12 @@ export function MatchCard({ match, homeTeam, awayTeam }: MatchCardProps) {
                 {awayTeam?.fifa_code}
               </p>
             </div>
+
+            {match.finished === "TRUE" && Number(match.away_score) > 0 && (
+              <div>
+                <ScorersCard rawData={match.away_scorers} />
+              </div>
+            )}
           </div>
         </div>
 
@@ -85,11 +97,15 @@ export function MatchCard({ match, homeTeam, awayTeam }: MatchCardProps) {
 
         {/* Footer */}
         <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
-          <span>{match.local_date}</span>
+          <p className="flex items-center justify-start gap-3">
+            <span className="font-bold">
+              {formatIncomingDate(match.local_date)}
+            </span>
+            <span>{new Date(match.local_date).toDateString()}</span>
+          </p>
 
           <div className="flex gap-2">
             <Badge variant="secondary">{homeTeam?.iso2}</Badge>
-
             <Badge variant="secondary">{awayTeam?.iso2}</Badge>
           </div>
 
@@ -97,5 +113,54 @@ export function MatchCard({ match, homeTeam, awayTeam }: MatchCardProps) {
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+function getUserTimezone() {
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  return userTimeZone;
+}
+
+function formatIncomingDate(dateString: string) {
+  const [datePart, timePart] = dateString.split(" ");
+  const [month, day, year] = datePart.split("/");
+  const isoString = `${year}-${month}-${day}T${timePart}:00`;
+
+  const absoluteDate = new Date(`${isoString}-04:00`);
+
+  const hours = absoluteDate.getHours();
+
+  return absoluteDate.getHours() > 18
+    ? `ምሸት ${hours - 18} ` + "ሰዓት"
+    : `ለይቲ ${hours + 6} ` + "ሰዓት";
+}
+
+function ScorersCard({ rawData }: { rawData: string }) {
+  // 1. Clean the invalid formatting into valid JSON syntax
+  const fixedJson = `[${rawData.replace(/"\s*,\s*"/g, '","')}]`;
+
+  // Safely handle whatever the database sends (string, array, or undefined)
+  let scorers: string[] = [];
+
+  if (typeof fixedJson === "string") {
+    // Use regex to find everything wrapped in double quotes
+    const matches = fixedJson.match(/"([^"]+)"/g);
+
+    if (matches) {
+      // Strip the double quotes out of the matched strings
+      scorers = matches.map((item) => item.replace(/"/g, ""));
+    }
+  } else if (Array.isArray(fixedJson)) {
+    scorers = fixedJson;
+  }
+
+  return (
+    <div style={{ fontFamily: "sans-serif", fontSize: "14px" }}>
+      {scorers.map((scorer, index) => (
+        <div key={index} style={{ marginBottom: "4px" }}>
+          ⚽ {scorer}
+        </div>
+      ))}
+    </div>
   );
 }
