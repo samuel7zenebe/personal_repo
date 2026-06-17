@@ -1,4 +1,6 @@
 import MatchList from "@/components/MatchList";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export interface WorldCupMatch {
   _id: string;
@@ -31,20 +33,34 @@ export interface WorldCupMatchesResponse {
 export const dynamic = "force-dynamic";
 
 async function Page() {
-  const response = await fetch("https://worldcup26.ir/get/games", {
-    method: "GET",
-    cache: "no-store",
-  });
-  const data: {
-    games: WorldCupMatch[];
-  } = await response.json();
+  try {
+    const response = await fetch("https://worldcup26.ir/get/games", {
+      method: "GET",
+      cache: "no-store",
+    });
+    const data: {
+      games: WorldCupMatch[];
+    } = await response.json();
 
-  return (
-    <div className="w-full flex flex-col justify-center items-center">
-      {/* <TeamList teams={teamsData as TeamType[]} /> */}
-      <MatchList data={data} />
-    </div>
-  );
+    return (
+      <div className="w-full flex flex-col justify-center items-center">
+        {/* <TeamList teams={teamsData as TeamType[]} /> */}
+
+        <MatchList data={data} />
+      </div>
+    );
+  } catch (err: any) {
+    console.log(" Error: ", err);
+    return (
+      <div className="w-full  mx-auto text-2xl italic font-bold p-10 bg-red-200 text-red-900">
+        <h1> Something went wrong , most probably fetch failed.</h1>
+        {err?.message && <pre>{JSON.stringify(err)}</pre>}
+        <Button variant={"link"} className="block">
+          <Link href={"/standings"}> Refresh </Link>
+        </Button>
+      </div>
+    );
+  }
 }
 
 export default Page;
