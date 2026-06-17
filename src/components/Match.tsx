@@ -116,11 +116,6 @@ export function MatchCard({ match, homeTeam, awayTeam }: MatchCardProps) {
   );
 }
 
-function getUserTimezone() {
-  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  return userTimeZone;
-}
-
 function formatIncomingDate(dateString: string) {
   const [datePart, timePart] = dateString.split(" ");
   const [month, day, year] = datePart.split("/");
@@ -130,35 +125,40 @@ function formatIncomingDate(dateString: string) {
 
   const hours = absoluteDate.getHours();
 
-  return absoluteDate.getHours() > 18
-    ? `ምሸት ${hours - 18} ` + "ሰዓት"
-    : `ለይቲ ${hours + 6} ` + "ሰዓት";
+  return absoluteDate.toLocaleTimeString();
 }
 
-function ScorersCard({ rawData }: { rawData: string }) {
-  // 1. Clean the invalid formatting into valid JSON syntax
+function ScorersCard({
+  rawData,
+  align = "left",
+}: {
+  rawData: string;
+  align?: "left" | "right";
+}) {
   const fixedJson = `[${rawData.replace(/"\s*,\s*"/g, '","')}]`;
 
-  // Safely handle whatever the database sends (string, array, or undefined)
-  let scorers: string[] = [];
+  const matches = fixedJson.match(/"([^"]+)"/g) ?? [];
 
-  if (typeof fixedJson === "string") {
-    // Use regex to find everything wrapped in double quotes
-    const matches = fixedJson.match(/"([^"]+)"/g);
+  const scorers = matches.map((item) => item.replace(/"/g, ""));
 
-    if (matches) {
-      // Strip the double quotes out of the matched strings
-      scorers = matches.map((item) => item.replace(/"/g, ""));
-    }
-  } else if (Array.isArray(fixedJson)) {
-    scorers = fixedJson;
-  }
+  if (scorers.length === 0) return null;
 
   return (
-    <div style={{ fontFamily: "sans-serif", fontSize: "14px" }}>
+    <div
+      className={`space-y-1 text-sm ${
+        align === "right" ? "text-right" : "text-left"
+      }`}
+    >
       {scorers.map((scorer, index) => (
-        <div key={index} style={{ marginBottom: "4px" }}>
-          ⚽ {scorer}
+        <div
+          key={index}
+          className={`flex items-center gap-2 ${
+            align === "right" ? "justify-end" : "justify-start"
+          }`}
+        >
+          {align === "left" && <span>⚽</span>}
+          <span>{scorer}</span>
+          {align === "right" && <span>⚽</span>}
         </div>
       ))}
     </div>

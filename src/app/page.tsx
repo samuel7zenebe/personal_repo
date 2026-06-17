@@ -27,10 +27,13 @@ export interface WorldCupMatchesResponse {
   success: boolean;
   data: WorldCupMatch[];
 }
+
+export const dynamic = "force-dynamic";
+
 async function Page() {
   const response = await fetch("https://worldcup26.ir/get/games", {
     method: "GET",
-    cache: "force-cache",
+    cache: "no-store",
   });
   const data: {
     games: WorldCupMatch[];
